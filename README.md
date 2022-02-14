@@ -10,7 +10,7 @@ Project Title: Shape Memorization
 A grid or variable size is displayed to the user, consisting of various colors. The user must memorize the grid, and then duplicate it on a blank grid from memory. The best times and scores will be shown to a user in a leaderboard, with higher accuracies giving a higher score. If a given grid is completed successfully, more grids with less patterns and greater size will be shown until the user fails.
 
 Functional Requirements:
-* The program on start shows the user a menu screen which displays a leaderboard button, start button, difficult options and help button
+* The program on start shows the user a menu screen which displays a leaderboard button, start button, difficulty options and help button
 * The user can learn how to play the game by clicking the help button
 * The game can be started when the start button is clicked
 * The game ends if the user gets the pattern incorrect, which takes them back to the main menu
