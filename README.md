@@ -2,6 +2,7 @@
 Repo for 1022 Android Studio project
 
 Team name: 200 IQ
+
 Members: 
 - Luke Da Re-White knot@my.yorku.ca, Section O, Lab 03
 - Gabriel Henderson ghend@my.yorku.ca, Section N, Lab 04
