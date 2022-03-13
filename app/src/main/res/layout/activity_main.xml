@@ -7,23 +7,25 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Help"
+        android:onClick="helpPop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonLeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Leaderboard"
+        android:onClick="leaderPop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="START"
@@ -40,6 +42,6 @@
         android:text="Diff: Easy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
