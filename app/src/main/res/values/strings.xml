@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">1022Memorization</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="start">START</string>
+    <string name="diff_easy">Diff: Easy</string>
+    <string name="help">Help</string>
 </resources>

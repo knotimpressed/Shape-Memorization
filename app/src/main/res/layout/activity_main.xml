@@ -4,44 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background ="#111111"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help"
         android:onClick="helpPop"
+        android:text="@string/help"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/teal"
+        />
 
     <Button
         android:id="@+id/buttonLeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leaderboard"
         android:onClick="leaderPop"
+        android:text="@string/leaderboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/teal"
+        />
 
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START"
+        android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/teal"
+        />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Diff: Easy"
+        android:text="@string/diff_easy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStart"
+        android:backgroundTint="@color/teal"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
