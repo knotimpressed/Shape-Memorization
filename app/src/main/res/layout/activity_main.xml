@@ -42,7 +42,8 @@
         />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/diffButton"
+        android:onClick="diffButton"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

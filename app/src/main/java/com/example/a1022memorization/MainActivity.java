@@ -2,21 +2,53 @@ package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+/*
+Bugs List:
+- Difficulty Button takes two clicks to change off of the first Easy (does not even show up in debug)
 
+
+Possible Improvements (They work now but might want to change):
+- Do the better practice of changing the difficulty buttons text properly
+
+
+
+
+
+
+ */
 public class MainActivity extends AppCompatActivity {
-
+    //Global Stuff
+    //Keeps track of difficulty
+    int diffCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Makes the app full screen because the wifi and other icons are annoying
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
+        //Switch From Main Menu to Game Screen
+        Button button = (Button) findViewById(R.id.buttonStart);
+        button.setOnClickListener(v -> {
+
+            Intent intent = new Intent(this,GameActivity.class);
+
+            startActivity(intent);
+
+        });
     }
 
     public void leaderPop(View view) {
@@ -68,6 +100,33 @@ public class MainActivity extends AppCompatActivity {
                 popupWindow.dismiss();
                 return true;
             }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void diffButton(View view){
+        //Difficult Button swapping text and value
+        Button diffButton = (Button) findViewById(R.id.diffButton);
+        diffButton.setOnClickListener(d ->{
+            //Moves to Next Difficulty
+            diffCount++;
+            //Resets back to easy
+            if(diffCount > 2){
+                diffCount = 0;
+            }
+            //Easy
+            if(diffCount == 0){
+                diffButton.setText("Diff: Easy");
+            }
+            //Medium
+            else if(diffCount == 1){
+                diffButton.setText("Diff: Medium");
+            }
+            //Hard
+            else{
+                diffButton.setText("Diff: Hard");
+            }
+
         });
     }
 }
