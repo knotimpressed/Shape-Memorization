@@ -26,5 +26,17 @@ public class GameActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        //Receives the parsed difficulty from the main menu
+
+        //Currently Causes the app to crash when transferring the data idk why
+
+        //Intent mIntent = getIntent();
+        //String diffStr = mIntent.getStringExtra("diffCount");
+        //int diffCount = Integer.valueOf(diffStr);
+        //System.out.println(diffCount);
+
+
+        //Generates starting amount of buttons based on difficulty
+        // Run the color button generation here and then sort it into the table
     }
 }

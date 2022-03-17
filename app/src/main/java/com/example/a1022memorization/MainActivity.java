@@ -28,6 +28,7 @@ Possible Improvements (They work now but might want to change):
 
 
  */
+
 public class MainActivity extends AppCompatActivity {
     //Global Stuff
     //Keeps track of difficulty
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(this,GameActivity.class);
 
+            //Parses in the difficulty to the game
+            intent.putExtra("diffCount",diffCount);
+            //Starts the game
             startActivity(intent);
 
         });
