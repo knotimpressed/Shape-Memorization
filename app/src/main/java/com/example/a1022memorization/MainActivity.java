@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import java.sql.SQLOutput;
 
 /*
 Bugs List:
@@ -53,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        diffButton(null);// run this once to set up the diff button
     }
 
-    public void leaderPop(View view) {
+    public void leaderPop(View view) {// makes leaderboard popup
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void helpPop(View view) {
+    public void helpPop(View view) {// makes help popup
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -112,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         //Difficult Button swapping text and value
         Button diffButton = (Button) findViewById(R.id.diffButton);
         diffButton.setOnClickListener(d ->{
+            Log.i("test", "diffpress");
             //Moves to Next Difficulty
             diffCount++;
             //Resets back to easy
