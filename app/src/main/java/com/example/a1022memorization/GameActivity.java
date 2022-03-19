@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -41,18 +42,37 @@ public class GameActivity extends AppCompatActivity {
         //Generates starting amount of buttons based on difficulty
         // Run the color button generation here and then sort it into the table
 
+        /*
+
+
+        Randomization of the colors
+
+
+         */
         Context context = this;
-        int buttonStyle = R.style.TableStyle;
 
         Button[][] buttonArray = new Button[4][4];// initialize button array
+        int buttId = 101; // TODO: Don't use hardcoded values for dimensions
+        int[] randArr = new int[16];
+        for(int i = 0; i < 16; i++) {
+            randArr[i] = ThreadLocalRandom.current().nextInt(0, 2+1);
+        }
+
+        int colorCount = 0;
         for (int row = 0; row < 4; row++) {// propagate and make look okay/better
             for (int button = 0; button < 4; button++) {
                 //Button currentButton = new Button(context,null, buttonStyle);// TODO: this code doesnt work but it would be nice if it did
                 Button currentButton = new Button(context);
+                currentButton.setId(buttId);
+                currentButton.setBackgroundColor(
+                        currentButton.getContext().getResources().getColor(
+                                R.color.color0 + randArr[colorCount]));
+                colorCount++;
                 currentButton.setText("0");
                 currentButton.setWidth(50);
+                //currentButton.setId(buttId);
                 // you could initialize them here
-                currentButton.setOnClickListener(v -> {Log.i("button", "button");});
+                //currentButton.setOnClickListener(v -> {Log.i("button", "button");});
                 //TableLayout.LayoutParams params =
                 //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
                 //currentButton.setLayoutParams(params);
@@ -67,11 +87,23 @@ public class GameActivity extends AppCompatActivity {
         currentButton.setWidth(50);
         TableLayout layout = (TableLayout) findViewById(R.id.gameTable);
         layout.addView(currentButton);*/
+
+
+        /*
+
+
+        Creation of Buttons for player input
+
+
+        */
+
     }
 
 
     //Button[][] buttonArrayIn, TableLayout tableIn,
     public void updateTable(Button[][] buttonArray, Context context){
+        // NEEED TO WIPE TABLE!!!!!!!!!
+
         TableLayout table = findViewById(R.id.gameTable);
         for (int row = 0; row < 4; row++) {
             TableRow currentRow = new TableRow(context);

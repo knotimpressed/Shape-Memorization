@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <!-- Colors that we added -->
     <color name="teal">#01c79e</color>
+    <color name="teal1">#ff00ff</color>
+    <!-- Colors for the buttons -->
+    <color name="color0">#FF5722</color>
+    <color name="color1">#64DD17</color>
+    <color name="color2">#304FFE</color>
+
 </resources>
