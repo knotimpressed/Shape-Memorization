@@ -25,6 +25,14 @@ Bugs List:
 Possible Improvements (They work now but might want to change):
 - Do the better practice of changing the difficulty buttons text properly
 
+Todo:
+- make entire game lol
+    -make default start table
+        -add colour cycling
+    -game table random generation
+    -different game sizes (REMEMBER WHEN DOING ABOVE STUFF)
+    -time tracking
+    -leaderboard implementation
 
 
 
