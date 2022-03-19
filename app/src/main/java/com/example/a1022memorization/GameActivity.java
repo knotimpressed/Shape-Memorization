@@ -2,11 +2,15 @@ package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -19,10 +23,10 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
         //Switch From Game Screen to Main Menu
-        Button button = (Button) findViewById(R.id.back);
-        button.setOnClickListener(v -> {
+        Button backButton = (Button) findViewById(R.id.back);
+        backButton.setOnClickListener(v -> {
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
 
             startActivity(intent);
 
@@ -36,5 +40,55 @@ public class GameActivity extends AppCompatActivity {
 
         //Generates starting amount of buttons based on difficulty
         // Run the color button generation here and then sort it into the table
+
+        Context context = this;
+        int buttonStyle = R.style.TableStyle;
+
+        Button[][] buttonArray = new Button[4][4];// initialize button array
+        for (int row = 0; row < 4; row++) {// propagate and make look okay/better
+            for (int button = 0; button < 4; button++) {
+                //Button currentButton = new Button(context,null, buttonStyle);// TODO: this code doesnt work but it would be nice if it did
+                Button currentButton = new Button(context);
+                currentButton.setText("0");
+                currentButton.setWidth(50);
+                // you could initialize them here
+                currentButton.setOnClickListener(v -> {Log.i("button", "button");});
+                //TableLayout.LayoutParams params =
+                //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
+                //currentButton.setLayoutParams(params);
+                buttonArray[row][button] = currentButton;
+            }
+        }
+
+        this.updateTable(buttonArray, context);// update the table
+
+        /*Button currentButton = new Button(context,null, buttonStyle);// test code to set a button, doesnt work
+        currentButton.setText("test");
+        currentButton.setWidth(50);
+        TableLayout layout = (TableLayout) findViewById(R.id.gameTable);
+        layout.addView(currentButton);*/
     }
+
+
+    //Button[][] buttonArrayIn, TableLayout tableIn,
+    public void updateTable(Button[][] buttonArray, Context context){
+        TableLayout table = findViewById(R.id.gameTable);
+        for (int row = 0; row < 4; row++) {
+            TableRow currentRow = new TableRow(context);
+            for (int button = 0; button < 4; button++) {
+                //Button currentButton = new Button(context,null, R.style.TableStyle);
+                /*Button currentButton = new Button(context);
+                currentButton.setText("test2");
+                currentButton.setWidth(50);
+                // you could initialize them here
+                currentButton.setOnClickListener(v -> {Log.i("button", "button");});
+                buttonArray[row][button] = currentButton;*/
+                // and you have to add them to the TableRow
+                currentRow.addView(buttonArray[row][button]);
+            }
+            // a new row has been constructed -> add to table
+            table.addView(currentRow);
+        }
+    }
+
 }

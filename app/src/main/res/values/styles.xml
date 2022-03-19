@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TableStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#00FFF0</item>
+        <item name="android:text">0</item>
+        <item name="android:backgroundTint">@color/teal</item>
+        <!--<item name=""></item>-->
+    </style>
+</resources>
