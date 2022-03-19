@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -28,12 +29,9 @@ public class GameActivity extends AppCompatActivity {
         });
         //Receives the parsed difficulty from the main menu
 
-        //Currently Causes the app to crash when transferring the data idk why
-
-        //Intent mIntent = getIntent();
-        //String diffStr = mIntent.getStringExtra("diffCount");
-        //int diffCount = Integer.valueOf(diffStr);
-        //System.out.println(diffCount);
+        int diffCount = getIntent().getExtras().getInt("diffCount", 0);
+        //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
+        Log.i("diffCount", Integer.toString(diffCount));
 
 
         //Generates starting amount of buttons based on difficulty

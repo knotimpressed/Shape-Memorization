@@ -20,6 +20,7 @@ import java.sql.SQLOutput;
 /*
 Bugs List:
 - Difficulty Button takes two clicks to change off of the first Easy (does not even show up in debug)
+- Not really a bug but make better object names
 
 
 Possible Improvements (They work now but might want to change):
@@ -31,6 +32,7 @@ Todo:
         -add colour cycling
     -game table random generation
     -different game sizes (REMEMBER WHEN DOING ABOVE STUFF)
+    -guess validation
     -time tracking
     -leaderboard implementation
 
@@ -59,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,GameActivity.class);
 
             //Parses in the difficulty to the game
-            intent.putExtra("diffCount",diffCount);
+            //intent.putExtra("diffCount",diffCount);
+
+            intent.putExtra("diffCount", diffCount);
+
             //Starts the game
             startActivity(intent);
 
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         //Difficult Button swapping text and value
         Button diffButton = (Button) findViewById(R.id.diffButton);
         diffButton.setOnClickListener(d ->{
-            Log.i("test", "diffpress");
+            //Log.i("test", "diffpress");// this is a debug log message, if anyone wants to use it @hliwudnew
             //Moves to Next Difficulty
             diffCount++;
             //Resets back to easy
