@@ -12,11 +12,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Calendar;
 
 public class GameActivity extends AppCompatActivity {
 
     public static int[][] guess = new int[1][1];// stupid global variable to make code simpler, current guess state
+    public static boolean betterRand = true;// if true, makes actually random games
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +136,17 @@ public class GameActivity extends AppCompatActivity {
         Button[][] buttonArray = new Button[rows][columns];// initialize button array
         int buttId = 101;
         int[] randArr = new int[rows*columns];
+
+        if(betterRand) {
+            int cycles = 0;
+            Date currentTime = Calendar.getInstance().getTime();
+            cycles = currentTime.getSeconds();// this is deprecated but hey it works lol
+            Log.i("seconds for cycles", Integer.toString(cycles));
+            for (int i = 0; i < cycles; i++) {// this fixes the random numbers always being the same
+                ThreadLocalRandom.current().nextInt(0, 2);
+            }
+        }
+
         for(int i = 0; i < rows*columns; i++) {
             randArr[i] = ThreadLocalRandom.current().nextInt(0, 2+1);
         }
