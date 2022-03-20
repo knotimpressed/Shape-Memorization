@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameActivity extends AppCompatActivity {
 
-    //int[][] guess = new int[1][1];// stupid global variable to make code simpler
+    public static int[][] guess = new int[1][1];// stupid global variable to make code simpler
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,9 @@ public class GameActivity extends AppCompatActivity {
 
 
             //Log.i("TL", Integer.toString(guess[0][0]));
-            //Log.i("check", Integer.toString(guess.length));
+            /*if(guessG[0][0] != 0) {
+                Log.i("check", "1");
+            }*/
 
             int[][] userIn = this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners
 
@@ -93,8 +96,8 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    public int[][] getUserTable(int rows, int columns, Context context){
-        int guess[][] = new int[rows][columns];//in theory, all zeroes
+    public void getUserTable(int rows, int columns, Context context){
+        guess = new int[rows][columns];//in theory, all zeroes
         Button[][] buttonArray = new Button[rows][columns];// initialize button array
 
         for (int row = 0; row < rows; row++) {// propagate and make look okay/better
@@ -106,19 +109,9 @@ public class GameActivity extends AppCompatActivity {
 
                 int finalRow = row;// these are semi-final so the lambda expression works, just for debug
                 int finalColumn = button;
-                currentButton.setOnClickListener(v -> {// code to cycle the colors
-                    Log.i("button", "row: " + finalRow + " Column: " + finalColumn);
-                    if(guess[finalRow][finalColumn] < 2) {
-                        guess[finalRow][finalColumn]++;
-                        currentButton.setBackgroundColor(
-                                currentButton.getContext().getResources().getColor(
-                                        R.color.color0 + guess[finalRow][finalColumn]));
-                    }
-                    else{
-                        guess[finalRow][finalColumn] = 0;
-                        currentButton.setBackgroundColor(
-                                currentButton.getContext().getResources().getColor(
-                                        R.color.color0 + guess[finalRow][finalColumn]));
+                currentButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {// code to cycle the colors
+                        buttonFunc(finalRow, finalColumn);
                     }
                 });
                 //TableLayout.LayoutParams params =
@@ -131,6 +124,23 @@ public class GameActivity extends AppCompatActivity {
         this.updateTable(buttonArray, context);// update the table
         Log.i("return", Integer.toString(guess.length));
         return(guess);
+    }
+
+    public void buttonFunc(int finalRow, int finalColumn) {
+        Log.i("button", "row: " + finalRow + " Column: " + finalColumn);
+
+        /*if (guess[finalRow][finalColumn] < 2) {
+            guess[finalRow][finalColumn]++;
+            currentButton.setBackgroundColor(
+                    currentButton.getContext().getResources().getColor(
+                            R.color.color0 + guess[finalRow][finalColumn]));
+        } else {
+            guess[finalRow][finalColumn] = 0;
+            currentButton.setBackgroundColor(
+                    currentButton.getContext().getResources().getColor(
+                            R.color.color0 + guess[finalRow][finalColumn]));
+        }*/
+        GameActivity.guessG[0][0]++;
     }
 
 
