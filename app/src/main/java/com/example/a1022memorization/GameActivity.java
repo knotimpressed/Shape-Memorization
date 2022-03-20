@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static int[][] guess = new int[1][1];// stupid global variable to make code simpler
+    public static int[][] guess = new int[1][1];// stupid global variable to make code simpler, current guess state
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,93 +43,78 @@ public class GameActivity extends AppCompatActivity {
         Log.i("diffCount", Integer.toString(diffCount));
 
 
-        //Generates starting amount of buttons based on difficulty
+        //Generates starting amount of buttons based on difficulty TODO: actually make it do that lol
         // Run the color button generation here and then sort it into the table
 
-        Context context = this;
+        Context context = this;// context of where to make buttons
 
         int rows = 3;
         int columns = 3;
 
         int[] pattern = this.randomTable(rows, columns, context);// randomize colors
 
-        Button submitButton = (Button) findViewById(R.id.submit);// wipe the table to blank
+        Button submitButton = (Button) findViewById(R.id.submit);// set up submit button as "im done memorizing"
         submitButton.setOnClickListener(v -> {
-            //guess = new int[rows][columns];
-            int[][] userIn = this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners
-            //Log.i("first wipe", Integer.toString(guess.length));
-        });
 
-        submitButton.setOnClickListener(v -> {// check user input
+            this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners, and wipes table
 
-            //for now this can chill here but it should probably be its own method or something, in like a chain for the game screens
+            submitButton.setOnClickListener(v2 -> {// check user input if its pressed again (ikik this is kinda bad)
 
+                //for now this can chill here but it should probably be its own method or something, in like a chain for the game screens
 
-            //Log.i("TL", Integer.toString(guess[0][0]));
-            /*if(guessG[0][0] != 0) {
-                Log.i("check", "1");
-            }*/
-
-            int[][] userIn = this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners
-
-            boolean correct = true;
-            for(int i = 0; i < rows; i++){
-                for(int j = 0; j < columns; j++){
-                    if(pattern[i*rows + j] != userIn[i][j]){
-                        correct = false;
-                        Log.i("bad tile", "i: " + i + " j: " + j + " LS: " + pattern[i*rows + j] + " RS: " + userIn[i][j]);
-                        break;
+                boolean correct = true;// check each cell in the guess with the generated random array
+                for(int i = 0; i < rows; i++){
+                    for(int j = 0; j < columns; j++){
+                        if(pattern[i*rows + j] != guess[i][j]){
+                            correct = false;
+                            //Log.i("bad tile", "i: " + i + " j: " + j + " LS: " + pattern[i*rows + j] + " RS: " + guess[i][j]);//debug log
+                            break;// this might not do anything but doesnt really matter
+                        }
                     }
                 }
-            }
-            if(correct) {
-                Log.i("guess", "correct");
-            }
-            else{
-                Log.i("guess", "incorrect");
-            }
-
-            //int[][] userIn = this.getUserTable(rows, columns, context);// get user input
-
+                if(correct) {// TODO: some actual output goes here
+                    Log.i("guess", "correct");
+                }
+                else{
+                    Log.i("guess", "incorrect");
+                }
+            });
         });
-
-
     }
 
     public void getUserTable(int rows, int columns, Context context){
-        guess = new int[rows][columns];//in theory, all zeroes
+        guess = new int[rows][columns];//in theory, all zeroes on initialization
         Button[][] buttonArray = new Button[rows][columns];// initialize button array
 
-        for (int row = 0; row < rows; row++) {// propagate and make look okay/better
-            for (int button = 0; button < columns; button++) {
+        for (int row = 0; row < rows; row++) {// propagate and make look okay/better (in theory)
+            for (int button = 0; button < columns; button++) {//loop though, setting each as per the randomized array
                 Button currentButton = new Button(context);
                 currentButton.setBackgroundColor(
                         currentButton.getContext().getResources().getColor(
                                 R.color.color0 + 0));
 
-                int finalRow = row;// these are semi-final so the lambda expression works, just for debug
+                int finalRow = row;// these are semi-final so the lambda expression works
                 int finalColumn = button;
                 currentButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {// code to cycle the colors
-                        buttonFunc(finalRow, finalColumn);
+                        buttonFunc(finalRow, finalColumn, currentButton);
                     }
                 });
                 //TableLayout.LayoutParams params =
-                //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
+                //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,
+                //          TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
                 //currentButton.setLayoutParams(params);
-                buttonArray[row][button] = currentButton;
+                buttonArray[row][button] = currentButton;// write out the current button to the array
             }
         }
 
-        this.updateTable(buttonArray, context);// update the table
-        Log.i("return", Integer.toString(guess.length));
-        return(guess);
+        this.updateTable(buttonArray, context);// update the table using the custom method
     }
 
-    public void buttonFunc(int finalRow, int finalColumn) {
-        Log.i("button", "row: " + finalRow + " Column: " + finalColumn);
+    public void buttonFunc(int finalRow, int finalColumn, Button currentButton) {// function that runs when a guess button is pressed
+        Log.i("button", "row: " + finalRow + " Column: " + finalColumn);// degub output
 
-        /*if (guess[finalRow][finalColumn] < 2) {
+        if (guess[finalRow][finalColumn] < 2) {// loop through colours for each button, while updating global guess array
             guess[finalRow][finalColumn]++;
             currentButton.setBackgroundColor(
                     currentButton.getContext().getResources().getColor(
@@ -139,12 +124,11 @@ public class GameActivity extends AppCompatActivity {
             currentButton.setBackgroundColor(
                     currentButton.getContext().getResources().getColor(
                             R.color.color0 + guess[finalRow][finalColumn]));
-        }*/
-        GameActivity.guessG[0][0]++;
+        }
     }
 
 
-    public int[] randomTable(int rows, int columns, Context context){
+    public int[] randomTable(int rows, int columns, Context context){// makes the array of randomly coloured buttons
         Button[][] buttonArray = new Button[rows][columns];// initialize button array
         int buttId = 101;
         int[] randArr = new int[rows*columns];
@@ -162,9 +146,6 @@ public class GameActivity extends AppCompatActivity {
                         currentButton.getContext().getResources().getColor(
                                 R.color.color0 + randArr[colorCount]));
                 colorCount++;
-                //currentButton.setId(buttId);
-                // you could initialize them here
-                //currentButton.setOnClickListener(v -> {Log.i("button", "button");});
                 //TableLayout.LayoutParams params =
                 //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
                 //currentButton.setLayoutParams(params);
@@ -174,31 +155,15 @@ public class GameActivity extends AppCompatActivity {
 
         this.updateTable(buttonArray, context);// update the table
         return(randArr);
-
-        /*Button currentButton = new Button(context,null, buttonStyle);// test code to set a button, doesnt work
-        currentButton.setText("test");
-        currentButton.setWidth(50);
-        TableLayout layout = (TableLayout) findViewById(R.id.gameTable);
-        layout.addView(currentButton);*/
     }
 
-    //Button[][] buttonArrayIn, TableLayout tableIn,
-    public void updateTable(Button[][] buttonArray, Context context){
-        // NEEED TO WIPE TABLE!!!!!!!!!
+    public void updateTable(Button[][] buttonArray, Context context){// update the table to a new array of buttons
 
         TableLayout table = findViewById(R.id.gameTable);
-        table.removeAllViews();
-        for (int row = 0; row < buttonArray.length; row++) {
+        table.removeAllViews();// wipe table
+        for (int row = 0; row < buttonArray.length; row++) {// add each row of buttons to a row object
             TableRow currentRow = new TableRow(context);
             for (int button = 0; button < buttonArray[1].length; button++) {
-                //Button currentButton = new Button(context,null, R.style.TableStyle);
-                /*Button currentButton = new Button(context);
-                currentButton.setText("test2");
-                currentButton.setWidth(50);
-                // you could initialize them here
-                currentButton.setOnClickListener(v -> {Log.i("button", "button");});
-                buttonArray[row][button] = currentButton;*/
-                // and you have to add them to the TableRow
                 currentRow.addView(buttonArray[row][button]);
             }
             // a new row has been constructed -> add to table
