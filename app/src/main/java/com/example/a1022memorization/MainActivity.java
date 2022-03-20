@@ -21,6 +21,7 @@ import java.sql.SQLOutput;
 Bugs List:
 - Difficulty Button takes two clicks to change off of the first Easy (does not even show up in debug)
 - Not really a bug but make better object names
+- Seed random numbers, otherwise the first table is the same
 
 
 Possible Improvements (They work now but might want to change):
