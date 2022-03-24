@@ -63,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
 
             startActivity(intent);
             //TODO: use an add extras thing to pass name, level, seconds to main activity
+            //TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! use SystemClock.uptimeMillis() for timing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         });
 
