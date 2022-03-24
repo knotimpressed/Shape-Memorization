@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 /*
 Bugs List:
@@ -46,9 +47,25 @@ Todo:
 public class MainActivity extends AppCompatActivity {
     //Global Stuff
     //Keeps track of difficulty
-    int diffCount = 0;
+    int diffCount = 0;// shouldnt this be public static?
+
+    // leaderboard variables
+    ArrayList<String> name = new ArrayList<>();
+    ArrayList<Integer> level = new ArrayList<>();
+    ArrayList<Integer> sTot = new ArrayList<>();
+    ArrayList<Integer> mins = new ArrayList<>();
+    ArrayList<Integer> secs = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: check if extras were added (from the game), and if so pass to addScore.
+
+        String nameIn = getIntent().getExtras().getString("name", null);
+        if(nameIn != null){
+            //parse in the other stuff, then do addScore.
+        }
+
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -127,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void diffButton(View view){
-        //Difficult Button swapping text and value
+        //Difficulty Button swapping text and value
         Button diffButton = (Button) findViewById(R.id.diffButton);
         diffButton.setOnClickListener(d ->{
             //Log.i("test", "diffpress");// this is a debug log message, if anyone wants to use it @hliwudnew
@@ -152,4 +169,39 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+    // any score can be passed in, if it doesnt place it will be added then removed
+    public void addScore (String nameIn, int levelIn, int sTotIn, int minIn, int secIn){
+        int spots = 5;// max number of scores to store
+        int place = 0;
+        for(int i = 0; i < spots; i++){// could probably do this faster with .get
+            // i think this should work? idk, just get the place/index of where the new score goes
+            if(levelIn == level.get(i)){// there is a tie based on level, go to time
+                if(sTotIn < sTot.get(i)){//total seconds is smaller, take its place
+                    place = i;
+                    break;
+                }
+                else if(sTotIn == sTot.get(i)){//total seconds is exact same, place after
+                    place = i+1;
+                    break;
+                }
+                else if(levelIn > level.get(i+1)){// seconds arent smaller, but the next level goes down one
+                    place = i+1;// put in after this score
+                    break;
+                }
+            }
+        }
+
+        name.add(place, nameIn);
+        level.add(place, levelIn);
+        sTot.add(place, sTotIn);
+        mins.add(place, minIn);
+        secs.add(place, secIn);
+        name.remove(spots+1);
+        level.remove(spots+1);
+        sTot.remove(spots+1);
+        mins.remove(spots+1);
+        secs.remove(spots+1);
+    }
+
 }

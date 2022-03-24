@@ -22,6 +22,12 @@ public class GameActivity extends AppCompatActivity {
     public static int[][] guess = new int[1][1];// stupid global variable to make code simpler, current guess state
     public static boolean betterRand = true;// if true, makes actually random games
 
+    public static String name;
+    public static int level;
+    public static int sTot;
+    public static int mins;
+    public static int secs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //guess[0][0] = -1;// just for testing
@@ -45,6 +51,22 @@ public class GameActivity extends AppCompatActivity {
         int diffCount = getIntent().getExtras().getInt("diffCount", 0);
         //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
         Log.i("diffCount", Integer.toString(diffCount));
+
+
+        /* somewhere, we need to put this code on the end of game popup.
+        sendButton.setOnClickListener(v -> {
+
+            Intent intent = new Intent(this, MainActivity.class);
+
+            intent.putExtra("name", name);
+            //repeat for all the others
+
+            startActivity(intent);
+            //TODO: use an add extras thing to pass name, level, seconds to main activity
+
+        });
+
+         */
 
 
         //Generates starting amount of buttons based on difficulty TODO: actually make it do that lol
