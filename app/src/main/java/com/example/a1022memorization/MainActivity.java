@@ -61,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: check if extras were added (from the game), and if so pass to addScore.
 
+        //TODO: Causes the entire thing to crash off booting
+        /*
         String nameIn = getIntent().getExtras().getString("name", null);
         if(nameIn != null){
             //parse in the other stuff, then do addScore.
         }
 
+         */
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

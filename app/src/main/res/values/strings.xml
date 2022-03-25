@@ -4,4 +4,9 @@
     <string name="start">START</string>
     <string name="diff_easy">Diff: Easy</string>
     <string name="help">Help</string>
+    <string name="back">Back</string>
+    <string name="time_null">Time: null</string>
+    <string name="level_null">Level: null</string>
+    <string name="score_null">Score: null</string>
+    <string name="submit">Submit</string>
 </resources>

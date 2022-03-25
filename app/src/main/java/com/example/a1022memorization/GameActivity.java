@@ -1,15 +1,18 @@
 package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -120,6 +123,15 @@ public class GameActivity extends AppCompatActivity {
                         currentButton.getContext().getResources().getColor(
                                 R.color.color0 + 0));
 
+                //Sets Button width and height
+                //TODO Button scaling
+                //Problem is it currently makes buttons vanish
+                /*
+                currentButton.setLayoutParams(new ConstraintLayout.LayoutParams(
+                        TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                 */
+
                 int finalRow = row;// these are semi-final so the lambda expression works
                 int finalColumn = button;
                 currentButton.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +196,7 @@ public class GameActivity extends AppCompatActivity {
                         currentButton.getContext().getResources().getColor(
                                 R.color.color0 + randArr[colorCount]));
                 colorCount++;
+
                 //TableLayout.LayoutParams params =
                 //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
                 //currentButton.setLayoutParams(params);
