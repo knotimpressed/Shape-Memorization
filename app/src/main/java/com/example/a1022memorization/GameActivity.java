@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,10 @@ public class GameActivity extends AppCompatActivity {
     public static int sTot;
     public static int mins;
     public static int secs;
+    public static int rows = 3;
+    public static int columns = 3;
+    // array of colours, far better than the sketchy xml code
+    public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,9 @@ public class GameActivity extends AppCompatActivity {
         //Receives the parsed difficulty from the main menu
 
         int diffCount = getIntent().getExtras().getInt("diffCount", 0);
+        level = diffCount+1;
+        columns = diffCount+2;
+        rows = diffCount+2;
         //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
         Log.i("diffCount", Integer.toString(diffCount));
 
@@ -78,8 +86,7 @@ public class GameActivity extends AppCompatActivity {
 
         Context context = this;// context of where to make buttons
 
-        int rows = 3;
-        int columns = 3;
+
 
         int[] pattern = this.randomTable(rows, columns, context);// randomize colors
 
@@ -119,9 +126,7 @@ public class GameActivity extends AppCompatActivity {
         for (int row = 0; row < rows; row++) {// propagate and make look okay/better (in theory)
             for (int button = 0; button < columns; button++) {//loop though, setting each as per the randomized array
                 Button currentButton = new Button(context);
-                currentButton.setBackgroundColor(
-                        currentButton.getContext().getResources().getColor(
-                                R.color.color0 + 0));
+                currentButton.setBackgroundColor(gameColor[0]);
 
                 //Sets Button width and height
                 //TODO Button scaling
@@ -155,14 +160,10 @@ public class GameActivity extends AppCompatActivity {
 
         if (guess[finalRow][finalColumn] < 2) {// loop through colours for each button, while updating global guess array
             guess[finalRow][finalColumn]++;
-            currentButton.setBackgroundColor(
-                    currentButton.getContext().getResources().getColor(
-                            R.color.color0 + guess[finalRow][finalColumn]));
+            currentButton.setBackgroundColor(gameColor[guess[finalRow][finalColumn]]);
         } else {
             guess[finalRow][finalColumn] = 0;
-            currentButton.setBackgroundColor(
-                    currentButton.getContext().getResources().getColor(
-                            R.color.color0 + guess[finalRow][finalColumn]));
+            currentButton.setBackgroundColor(gameColor[guess[finalRow][finalColumn]]);
         }
     }
 
@@ -192,9 +193,7 @@ public class GameActivity extends AppCompatActivity {
                 //Button currentButton = new Button(context,null, buttonStyle);// TODO: this code doesnt work but it would be nice if it did
                 Button currentButton = new Button(context);
                 currentButton.setId(buttId);
-                currentButton.setBackgroundColor(
-                        currentButton.getContext().getResources().getColor(
-                                R.color.color0 + randArr[colorCount]));
+                currentButton.setBackgroundColor(gameColor[randArr[colorCount]]);
                 colorCount++;
 
                 //TableLayout.LayoutParams params =
@@ -212,9 +211,9 @@ public class GameActivity extends AppCompatActivity {
 
         TableLayout table = findViewById(R.id.gameTable);
         table.removeAllViews();// wipe table
-        for (int row = 0; row < buttonArray.length; row++) {// add each row of buttons to a row object
+        for (int row = 0; row < rows; row++) {// add each row of buttons to a row object
             TableRow currentRow = new TableRow(context);
-            for (int button = 0; button < buttonArray[1].length; button++) {
+            for (int button = 0; button < rows; button++) {
                 currentRow.addView(buttonArray[row][button]);
             }
             // a new row has been constructed -> add to table
