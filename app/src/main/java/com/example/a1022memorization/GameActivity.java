@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     public static int columns = 3;
     // array of colours, far better than the sketchy xml code
     public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
+    public static int buttonSize = 260;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +129,11 @@ public class GameActivity extends AppCompatActivity {
                 Button currentButton = new Button(context);
                 currentButton.setBackgroundColor(gameColor[0]);
 
+
                 //Sets Button width and height
-                //TODO Button scaling
+                currentButton.setWidth(buttonSize);
+                currentButton.setHeight(buttonSize);
+
                 //Problem is it currently makes buttons vanish
                 /*
                 currentButton.setLayoutParams(new ConstraintLayout.LayoutParams(
@@ -195,6 +199,9 @@ public class GameActivity extends AppCompatActivity {
                 currentButton.setId(buttId);
                 currentButton.setBackgroundColor(gameColor[randArr[colorCount]]);
                 colorCount++;
+
+                currentButton.setWidth(buttonSize);
+                currentButton.setHeight(buttonSize);
 
                 //TableLayout.LayoutParams params =
                 //        new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);// TODO: this code doesnt work but it would be nice if it did
