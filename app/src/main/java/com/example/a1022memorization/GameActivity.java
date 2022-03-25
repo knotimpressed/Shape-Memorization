@@ -102,7 +102,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }
                 }
-                if(correct) {// TODO: some actual output goes here
+                if(correct) {// TODO: some actual output goes here.
                     Log.i("guess", "correct");
                 }
                 else{
