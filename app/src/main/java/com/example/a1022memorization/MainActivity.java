@@ -22,6 +22,7 @@ import java.util.ArrayList;
 Bugs List:
 - Not really a bug but make better object names
 - remove handler if theres performance issues
+- make correct and incorrect popups not dissmissible
 
 
 Possible Improvements (They work now but might want to change):
@@ -35,17 +36,7 @@ leaderboard popup, which depends on:
     time tracking, which depends on some kind of an interval thing and SystemClock.uptimeMillis()
     user name input (shouldnt be too hard)
 
-Timing for level memorization, sub notes:
-    submit button name should change from submit to skip or something
-    time should count down not up, requiring probably 2 time update methods
-    time should be total used as well (maybe a second area for display?)
-    time given should change depending on level, i say use some formula like 1min - 5xlevel for a minimum of 10 secs
-
 I think that should be it!
-
-notes: maybe do level output first since that should be easy, and write a static method to turn seconds into mins:secs since well be using that a lot
-^could output both as formatted string and as int maybe too, like 2 methods
-after that do some timing stuff
  */
 
 public class MainActivity extends AppCompatActivity {

@@ -33,18 +33,20 @@ public class GameActivity extends AppCompatActivity {
 
     public static String name;
     public static int level;
-    public static int sTot;
+    public static int sTot = -1;
     public static int rows = 3;
     public static int columns = 3;
     // array of colours, far better than the sketchy xml code
     public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
     public static int buttonSize = 260;
-    public static boolean kill = false;// keep the one second timer thing running
     public static int secsLeft = 1;
+    public static boolean memPhase = true;
+    public final Handler handler = new Handler();
+    public Runnable oneSec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        kill = false;// keep the one second timer thing running
+        sTot = 0;
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -56,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            kill = true;
+            handler.removeCallbacks(oneSec);
         });
 
         //Receives the parsed difficulty from the main menu
@@ -92,7 +94,6 @@ public class GameActivity extends AppCompatActivity {
 
             startActivity(intent);
             //TODO: use an add extras thing to pass name, level, seconds to main activity
-            //TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! use SystemClock.uptimeMillis() for timing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         });
 
@@ -101,60 +102,22 @@ public class GameActivity extends AppCompatActivity {
 
         Context context = this;// context of where to make buttons
 
-
-
         int[] pattern = this.randomTable(rows, columns, context);// randomize colors
 
         Button submitButton = (Button) findViewById(R.id.submit);// set up submit button as "im done memorizing"
+        submitButton.setText("Done!");
         submitButton.setOnClickListener(v -> {
-
-            this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners, and wipes table
-
-            submitButton.setOnClickListener(v2 -> {// check user input if its pressed again (ikik this is kinda bad)
-
-                //for now this can chill here but it should probably be its own method or something, in like a chain for the game screens
-
-                boolean correct = true;// check each cell in the guess with the generated random array
-                for(int i = 0; i < rows; i++){
-                    for(int j = 0; j < columns; j++){
-                        if(pattern[i*rows + j] != guess[i][j]){
-                            correct = false;
-                            //Log.i("bad tile", "i: " + i + " j: " + j + " LS: " + pattern[i*rows + j] + " RS: " + guess[i][j]);//debug log
-                            break;// this might not do anything but doesnt really matter
-                        }
-                    }
-                }
-                if(correct) {
-                    Log.i("guess", "correct");
-                    View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
-                    gamePop(popView, true);
-                }
-                else{
-                    Log.i("guess", "incorrect");
-                    View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
-                    gamePop(popView, false);
-                    // TODO: leaderboard input goes here
-                }
+            userInput(context, submitButton, pattern);
             });
-        });
 
         TextView levelView = (TextView) findViewById(R.id.levelText);// set up submit button as "im done memorizing"
         levelView.setText("Level: " + level);
 
         updateAll();
-
-        final Handler handler = new Handler();
-
-        Runnable oneSec = new Runnable() {
+        oneSec = new Runnable() {
             public void run() {
-
-                if(!kill) {
                     updateAll();
                     handler.postDelayed(this, 1000);
-                }
-                else{
-                    Log.i("Tag", "Final timer run");
-                }
             }
         };
 
@@ -280,7 +243,7 @@ public class GameActivity extends AppCompatActivity {
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                kill = true;
+                handler.removeCallbacks(oneSec);
             });
 
             Button nextButton = (Button) popupView.findViewById(R.id.next);// make the next button do something
@@ -293,7 +256,7 @@ public class GameActivity extends AppCompatActivity {
 
                 //Starts the game
                 startActivity(intent);
-                kill = true;
+                handler.removeCallbacks(oneSec);
             });
 
         }
@@ -303,7 +266,7 @@ public class GameActivity extends AppCompatActivity {
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                kill = true;
+                handler.removeCallbacks(oneSec);
             });
         }
 
@@ -351,4 +314,34 @@ public class GameActivity extends AppCompatActivity {
         timeView.setText("Time Left: " + this.timeStr(secsLeft));
     }
 
+    public void userInput(Context context, Button submitButton, int[] pattern) {
+        this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners, and wipes table
+
+        submitButton.setText("submit");
+        submitButton.setOnClickListener(v2 -> {// check user input if its pressed again (ikik this is kinda bad)
+
+            //for now this can chill here but it should probably be its own method or something, in like a chain for the game screens
+
+            boolean correct = true;// check each cell in the guess with the generated random array
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if (pattern[i * rows + j] != guess[i][j]) {
+                        correct = false;
+                        //Log.i("bad tile", "i: " + i + " j: " + j + " LS: " + pattern[i*rows + j] + " RS: " + guess[i][j]);//debug log
+                        break;// this might not do anything but doesnt really matter
+                    }
+                }
+            }
+            if (correct) {
+                Log.i("guess", "correct");
+                View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
+                gamePop(popView, true);
+            } else {
+                Log.i("guess", "incorrect");
+                View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
+                gamePop(popView, false);
+                // TODO: leaderboard input goes here
+            }
+        });
+    }
 }
