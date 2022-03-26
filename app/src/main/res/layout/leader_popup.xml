@@ -6,6 +6,7 @@
     android:background="#62def8">
 
     <TextView
+        android:id="@+id/leaderBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -13,7 +14,9 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Leaderboard placeholder"
+        android:gravity="center_horizontal"
+        android:text="@string/leaderboard_placeholder"
+        android:textAlignment="center"
         android:textSize="22sp" />
 
 </RelativeLayout>

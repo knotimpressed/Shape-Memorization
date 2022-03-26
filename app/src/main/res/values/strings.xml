@@ -9,4 +9,5 @@
     <string name="level_null">Level: null</string>
     <string name="score_null">Score: null</string>
     <string name="submit">Submit</string>
+    <string name="leaderboard_placeholder">Leaderboard placeholder</string>
 </resources>

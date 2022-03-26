@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="500px"
     android:layout_height="350px"
-    android:background="#62def8">
+    android:background="#76F359">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="-115dp"
         android:layout_marginBottom="-1dp"
+        android:backgroundTint="@color/teal"
         android:text="Home" />
 
     <Button
@@ -33,6 +34,7 @@
         android:layout_marginTop="-115dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:backgroundTint="@color/teal"
         android:text="Next" />
 
 </RelativeLayout>

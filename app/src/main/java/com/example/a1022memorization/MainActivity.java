@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,8 +13,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
-import java.sql.SQLOutput;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /*
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
          */
+
+
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -90,8 +93,30 @@ public class MainActivity extends AppCompatActivity {
 
         });
         diffButton(null);// run this once to set up the diff button
+        leaderStartData(); // Fills in base values of the leaderboard
+
     }
 
+    public void leaderStartData(){
+        //LeaderBoard Starting Data
+        //1st
+        name.add(0, "Joe");
+        level.add(0,12);
+        sTot.add(0,320);
+        //2nd
+        name.add(1, "Candice");
+        level.add(1,7);
+        sTot.add(1,420);
+        //3rd
+        name.add(2, "Ferris");
+        level.add(2,5);
+        sTot.add(2,520);
+        //4th
+        name.add(3,"Deez");
+        level.add(3,3);
+        sTot.add(3,620);
+    }
+    @SuppressLint("SetTextI18n") // Very helpful
     public void leaderPop(View view) {// makes leaderboard popup
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
@@ -116,6 +141,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        //Displays the Leaderboard data
+        TextView leaderBoardText = popupView.findViewById(R.id.leaderBoard);
+        leaderBoardText.setText("Leaderboard\n " +
+                "\uD83E\uDD47: " + name.get(0)  +"\n" + "Level: " +level.get(0) +", " + "Time: " + timeStr(sTot.get(0))
+                +"\n \uD83E\uDD48: " + name.get(1)  +"\n " + "Level: " + level.get(1) +", " + " Time: " + timeStr(sTot.get(1))
+                + "\n \uD83E\uDD49: "  + name.get(2)  +"\n " + "Level: " +level.get(2) +", " + " Time: " + timeStr(sTot.get(2))
+                + "\n \uD83C\uDF6A: "  + name.get(3)  +"\n " + "Level: " +level.get(3) +", " + " Time: " + timeStr(sTot.get(3)));
+    }
+    //Totally not code from the other class
+    public static String timeStr(int secs){
+        NumberFormat formatter = new DecimalFormat("00");
+        String formatted = "00:00";
+
+        if(secs>0) {
+            int minsF = secs / 60;
+            int secsF = secs - (minsF * 60);
+
+            formatted = formatter.format(minsF) + ":" + formatter.format(secsF);
+        }
+        return(formatted);
     }
 
     public void helpPop(View view) {// makes help popup
