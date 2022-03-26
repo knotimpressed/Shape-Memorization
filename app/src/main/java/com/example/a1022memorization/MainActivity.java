@@ -36,6 +36,10 @@ leaderboard popup, which depends on:
     time tracking, which depends on some kind of an interval thing and SystemClock.uptimeMillis()
     user name input (shouldnt be too hard)
 
+timing:
+    actually change to input when memorization time is up
+    pause timers when popups are up
+
 I think that should be it!
  */
 
