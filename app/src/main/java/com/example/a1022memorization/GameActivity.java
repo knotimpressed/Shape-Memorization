@@ -86,9 +86,6 @@ public class GameActivity extends AppCompatActivity {
         });
 
          */
-
-
-        //Generates starting amount of buttons based on difficulty TODO: actually make it do that lol
         // Run the color button generation here and then sort it into the table
 
         Context context = this;// context of where to make buttons

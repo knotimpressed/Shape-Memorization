@@ -20,28 +20,31 @@ import java.util.ArrayList;
 
 /*
 Bugs List:
-- Difficulty Button takes two clicks to change off of the first Easy (does not even show up in debug)
 - Not really a bug but make better object names
-- Seed random numbers, otherwise the first table is the same
 
 
 Possible Improvements (They work now but might want to change):
 - Do the better practice of changing the difficulty buttons text properly
 
 Todo:
-- make entire game lol
-    -make default start table
-        -add colour cycling
-    -game table random generation
-    -different game sizes (REMEMBER WHEN DOING ABOVE STUFF)
-    -guess validation
-    -time tracking
-    -leaderboard implementation
+leaderboard popup, which depends on:
+    passing values from the game activity into the main activity
+        side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
+    figuring out how to procedurally change popups(mostly figured out)
+    time tracking, which depends on some kind of an interval thing and SystemClock.uptimeMillis()
+    user name input (shouldnt be too hard)
 
+Timing for level memorization, sub notes:
+    submit button name should change from submit to skip or something
+    time should count down not up, requiring probably 2 time update methods
+    time should be total used as well (maybe a second area for display?)
+    time given should change depending on level, i say use some formula like 1min - 5xlevel for a minimum of 10 secs
 
+I think that should be it!
 
-
-
+notes: maybe do level output first since that should be easy, and write a static method to turn seconds into mins:secs since well be using that a lot
+^could output both as formatted string and as int maybe too, like 2 methods
+after that do some timing stuff
  */
 
 public class MainActivity extends AppCompatActivity {
