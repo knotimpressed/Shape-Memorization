@@ -331,16 +331,18 @@ public class GameActivity extends AppCompatActivity {
         NumberFormat formatter = new DecimalFormat("00");
         String formatted = "00:00";
 
-        int minsF = secs/60;
-        int secsF = secs-(minsF*60);
+        if(secs>0) {
+            int minsF = secs / 60;
+            int secsF = secs - (minsF * 60);
 
-        formatted = formatter.format(minsF) + ":" + formatter.format(secsF);
-
+            formatted = formatter.format(minsF) + ":" + formatter.format(secsF);
+        }
         return(formatted);
     }
 
     public void updateAll() {// updates all the timers and whatever
         secsLeft--;// ok so maybe this isnt a super great idea but stilllllllllllllllllllll
+        sTot++;
 
         TextView totalView = (TextView) findViewById(R.id.totalText);// set up submit button as "im done memorizing"
         totalView.setText("Total Time: " + this.timeStr(sTot));
