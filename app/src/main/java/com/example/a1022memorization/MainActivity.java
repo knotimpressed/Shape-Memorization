@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: check if extras were added (from the game), and if so pass to addScore.
 
-        //TODO: Causes the entire thing to crash off booting
+        //TODO: Code for parsing in level stuff as said above
         /*
         String nameIn = getIntent().getExtras().getString("name", null);
         if(nameIn != null){

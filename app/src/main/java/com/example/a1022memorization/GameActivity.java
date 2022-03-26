@@ -1,19 +1,20 @@
 package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -36,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
     // array of colours, far better than the sketchy xml code
     public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
     public static int buttonSize = 260;
+    public static Intent homeIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,10 @@ public class GameActivity extends AppCompatActivity {
         //Switch From Game Screen to Main Menu
         Button backButton = (Button) findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
-
-            Intent intent = new Intent(this, MainActivity.class);
-
-            startActivity(intent);
-
+            homeIntent = new Intent(this, MainActivity.class);
+            startActivity(homeIntent);
         });
+
         //Receives the parsed difficulty from the main menu
 
         int diffCount = getIntent().getExtras().getInt("diffCount", 0);
@@ -110,11 +110,16 @@ public class GameActivity extends AppCompatActivity {
                         }
                     }
                 }
-                if(correct) {// TODO: some actual output goes here.
+                if(correct) {
                     Log.i("guess", "correct");
+                    View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
+                    gamePop(popView, true);
                 }
                 else{
                     Log.i("guess", "incorrect");
+                    View popView = findViewById(R.id.back);// this is dumb but i mean it works lol
+                    gamePop(popView, false);
+                    // TODO: leaderboard input goes here
                 }
             });
         });
@@ -226,6 +231,45 @@ public class GameActivity extends AppCompatActivity {
             // a new row has been constructed -> add to table
             table.addView(currentRow);
         }
+    }
+
+    public void gamePop(View view, boolean correct) {// makes leaderboard popup
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = null;// this needs to be here otherwise it complains
+        if(correct){
+            popupView = inflater.inflate(R.layout.correct_popup, null);
+            Button homeButton = (Button) findViewById(R.id.home);//TODO: this doesnt find the home button for some reason
+            if(homeButton == null) {
+                Log.i("home", "NULL!");
+            }
+            /*homeButton.setOnClickListener(v -> {
+                startActivity(homeIntent);
+            });*/
+        }
+        else {
+            popupView = inflater.inflate(R.layout.incorrect_popup, null);
+        }
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
 }
