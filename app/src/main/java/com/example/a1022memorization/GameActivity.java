@@ -2,6 +2,7 @@ package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,7 +38,6 @@ public class GameActivity extends AppCompatActivity {
     // array of colours, far better than the sketchy xml code
     public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
     public static int buttonSize = 260;
-    public static Intent homeIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +51,22 @@ public class GameActivity extends AppCompatActivity {
         //Switch From Game Screen to Main Menu
         Button backButton = (Button) findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
-            homeIntent = new Intent(this, MainActivity.class);
-            startActivity(homeIntent);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         });
 
         //Receives the parsed difficulty from the main menu
 
         int diffCount = getIntent().getExtras().getInt("diffCount", 0);
         level = diffCount+1;
-        columns = diffCount+2;
-        rows = diffCount+2;
+        if(diffCount+2 <= 4) {
+            columns = diffCount + 2;
+            rows = diffCount + 2;
+        }
+        else{
+            columns = 4;
+            rows = 4;
+        }
         //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
         Log.i("diffCount", Integer.toString(diffCount));
 
@@ -239,17 +245,33 @@ public class GameActivity extends AppCompatActivity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = null;// this needs to be here otherwise it complains
         if(correct){
-            popupView = inflater.inflate(R.layout.correct_popup, null);
-            Button homeButton = (Button) findViewById(R.id.home);//TODO: this doesnt find the home button for some reason
-            if(homeButton == null) {
-                Log.i("home", "NULL!");
-            }
-            /*homeButton.setOnClickListener(v -> {
-                startActivity(homeIntent);
-            });*/
+            popupView = inflater.inflate(R.layout.correct_popup, null);// make the popup
+            Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
+            homeButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            });
+
+            Button nextButton = (Button) popupView.findViewById(R.id.next);// make the next button do something
+            nextButton.setOnClickListener(v -> { //TODO: decide if this is acceptable cause its a lazy fix
+                // level can be left as is since its already difficulty + 1
+                Intent intent = new Intent(this,GameActivity.class);
+
+                //Parses in the difficulty to the game
+                intent.putExtra("diffCount", level);// in theory we could just pass in the time too? idk this is a little bad
+
+                //Starts the game
+                startActivity(intent);
+            });
+
         }
         else {
             popupView = inflater.inflate(R.layout.incorrect_popup, null);
+            Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
+            homeButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            });
         }
 
         // create the popup window
