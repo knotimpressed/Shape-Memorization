@@ -2,11 +2,11 @@ package com.example.a1022memorization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Calendar;
@@ -31,17 +34,17 @@ public class GameActivity extends AppCompatActivity {
     public static String name;
     public static int level;
     public static int sTot;
-    public static int mins;
-    public static int secs;
     public static int rows = 3;
     public static int columns = 3;
     // array of colours, far better than the sketchy xml code
     public static int[] gameColor = {Color.rgb(255,87,34), Color.rgb(100,221,23), Color.rgb(48,79,255)};
     public static int buttonSize = 260;
+    public static boolean kill = false;// keep the one second timer thing running
+    public static int secsLeft = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //guess[0][0] = -1;// just for testing
+        kill = false;// keep the one second timer thing running
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -53,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            kill = true;
         });
 
         //Receives the parsed difficulty from the main menu
@@ -66,6 +70,13 @@ public class GameActivity extends AppCompatActivity {
         else{
             columns = 4;
             rows = 4;
+        }
+
+        if(60-2*level >= 10){
+            secsLeft = 61 - (2*(level-1));
+        }
+        else{
+            secsLeft = 11;
         }
         //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
         Log.i("diffCount", Integer.toString(diffCount));
@@ -126,6 +137,28 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         });
+
+        TextView levelView = (TextView) findViewById(R.id.levelText);// set up submit button as "im done memorizing"
+        levelView.setText("Level: " + level);
+
+        updateAll();
+
+        final Handler handler = new Handler();
+
+        Runnable oneSec = new Runnable() {
+            public void run() {
+
+                if(!kill) {
+                    updateAll();
+                    handler.postDelayed(this, 1000);
+                }
+                else{
+                    Log.i("Tag", "Final timer run");
+                }
+            }
+        };
+
+        handler.postDelayed(oneSec, 1000);
     }
 
     public void getUserTable(int rows, int columns, Context context){
@@ -247,6 +280,7 @@ public class GameActivity extends AppCompatActivity {
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                kill = true;
             });
 
             Button nextButton = (Button) popupView.findViewById(R.id.next);// make the next button do something
@@ -259,6 +293,7 @@ public class GameActivity extends AppCompatActivity {
 
                 //Starts the game
                 startActivity(intent);
+                kill = true;
             });
 
         }
@@ -268,6 +303,7 @@ public class GameActivity extends AppCompatActivity {
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                kill = true;
             });
         }
 
@@ -289,6 +325,28 @@ public class GameActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public static String timeStr(int secs){
+        NumberFormat formatter = new DecimalFormat("00");
+        String formatted = "00:00";
+
+        int minsF = secs/60;
+        int secsF = secs-(minsF*60);
+
+        formatted = formatter.format(minsF) + ":" + formatter.format(secsF);
+
+        return(formatted);
+    }
+
+    public void updateAll() {// updates all the timers and whatever
+        secsLeft--;// ok so maybe this isnt a super great idea but stilllllllllllllllllllll
+
+        TextView totalView = (TextView) findViewById(R.id.totalText);// set up submit button as "im done memorizing"
+        totalView.setText("Total Time: " + this.timeStr(sTot));
+
+        TextView timeView = (TextView) findViewById(R.id.timeText);// set up submit button as "im done memorizing"
+        timeView.setText("Time Left: " + this.timeStr(secsLeft));
     }
 
 }

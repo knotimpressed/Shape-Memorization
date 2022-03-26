@@ -21,6 +21,7 @@ import java.util.ArrayList;
 /*
 Bugs List:
 - Not really a bug but make better object names
+- remove handler if theres performance issues
 
 
 Possible Improvements (They work now but might want to change):
