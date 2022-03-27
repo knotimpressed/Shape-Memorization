@@ -34,9 +34,9 @@ Todo:
 other/general:
     passing values from the game activity into the main activity
         side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
-    actually make it sort right
-    fix total time resetting and time left resetting
-    make sure if someone starts on hard their score doesnt post if they fail the level
+    actually make addScore sort right
+    fix total time resetting and time left resetting the screen
+    maybe make sure if someone starts on hard their score doesnt post if they fail the level, or make bottom leader lv 4
     pause timers when popups are up
     change px to dp
 
