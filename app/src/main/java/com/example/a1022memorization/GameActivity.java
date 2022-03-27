@@ -113,10 +113,10 @@ public class GameActivity extends AppCompatActivity {
         TextView levelView = (TextView) findViewById(R.id.levelText);// set up submit button as "im done memorizing"
         levelView.setText("Level: " + level);
 
-        updateAll();
+        updateAll(context, submitButton, pattern);
         oneSec = new Runnable() {
             public void run() {
-                    updateAll();
+                    updateAll(context, submitButton, pattern);
                     handler.postDelayed(this, 1000);
             }
         };
@@ -303,7 +303,7 @@ public class GameActivity extends AppCompatActivity {
         return(formatted);
     }
 
-    public void updateAll() {// updates all the timers and whatever
+    public void updateAll(Context context, Button submitButton, int[] pattern) {// updates all the timers and whatever
         secsLeft--;// ok so maybe this isnt a super great idea but stilllllllllllllllllllll
         sTot++;
 
@@ -312,6 +312,11 @@ public class GameActivity extends AppCompatActivity {
 
         TextView timeView = (TextView) findViewById(R.id.timeText);// set up submit button as "im done memorizing"
         timeView.setText("Time Left: " + this.timeStr(secsLeft));
+
+        if(secsLeft == 0){
+            userInput(context, submitButton, pattern);
+            secsLeft--;
+        }
     }
 
     public void userInput(Context context, Button submitButton, int[] pattern) {

@@ -34,12 +34,18 @@ leaderboard popup, which depends on:
     passing values from the game activity into the main activity
         side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
     figuring out how to procedurally change popups(mostly figured out)
-    time tracking, which depends on some kind of an interval thing and SystemClock.uptimeMillis()
     user name input (shouldnt be too hard)
 
 timing:
     actually change to input when memorization time is up
     pause timers when popups are up
+
+this stint:
+    actually change to input when memorization time is up
+    passing values from the game activity into the main activity
+        side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
+    make enter enter name for leaderboard
+
 
 I think that should be it!
  */
