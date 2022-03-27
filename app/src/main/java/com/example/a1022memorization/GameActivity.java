@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
     public static int[][] guess = new int[1][1];// stupid global variable to make code simpler, current guess state
     public static boolean betterRand = true;// if true, makes actually random games
 
-    public static String name;
+    public static String name = "default";
     public static int level;
     public static int sTot = -1;
     public static int rows = 3;
@@ -83,21 +86,6 @@ public class GameActivity extends AppCompatActivity {
         //String string2 = getIntent().getExtras().getString("STRING key","defaultValueIfNull");// basic form
         Log.i("diffCount", Integer.toString(diffCount));
 
-
-        /* somewhere, we need to put this code on the end of game popup.
-        sendButton.setOnClickListener(v -> {
-
-            Intent intent = new Intent(this, MainActivity.class);
-
-            intent.putExtra("name", name);
-            //repeat for all the others
-
-            startActivity(intent);
-            //TODO: use an add extras thing to pass name, level, seconds to main activity
-
-        });
-
-         */
         // Run the color button generation here and then sort it into the table
 
         Context context = this;// context of where to make buttons
@@ -232,7 +220,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void gamePop(View view, boolean correct) {// makes leaderboard popup
+    public void gamePop(View view, boolean correct) {// makes correct/incorrect popup
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -263,8 +251,43 @@ public class GameActivity extends AppCompatActivity {
         else {
             popupView = inflater.inflate(R.layout.incorrect_popup, null);
             Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
+            View finalPopupView = popupView;// needed for lambda
+
+            Context context = this;
+
+            TextInputEditText nameText = (TextInputEditText) finalPopupView.findViewById(R.id.newName);
+            nameText.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
+            nameText.setOnEditorActionListener(new TextView.OnEditorActionListener() {// yeah yeah this is copied whatever
+                public boolean onEditorAction(TextView v, int keyCode, KeyEvent event) {
+                    Log.i("text", "Ran");
+                    Intent intent = new Intent(context, MainActivity.class);
+
+                    //TextInputEditText nameText = (TextInputEditText) finalPopupView.findViewById(R.id.newName);
+
+                    name = nameText.getText().toString();
+
+                    intent.putExtra("name", name);
+                    intent.putExtra("level", Integer.toString(level));
+                    Log.i("level", Integer.toString(level));
+                    intent.putExtra("stot", Integer.toString(sTot));
+                    //repeat for all the others
+
+                    startActivity(intent);
+                    handler.removeCallbacks(oneSec);
+                    return false;
+                }
+            });
+
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
+
+                //TextInputEditText nameText = (TextInputEditText) finalPopupView.findViewById(R.id.newName);
+
+                name = nameText.getText().toString();
+
+                intent.putExtra("name", name);
+                //repeat for all the others
+
                 startActivity(intent);
                 handler.removeCallbacks(oneSec);
             });

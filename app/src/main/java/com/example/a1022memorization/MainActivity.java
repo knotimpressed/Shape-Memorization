@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,11 +42,11 @@ timing:
     pause timers when popups are up
 
 this stint:
-    actually change to input when memorization time is up
     passing values from the game activity into the main activity
         side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
-    make enter enter name for leaderboard
-
+    actually make it sort right
+    fix total time resetting and time left resetting
+    make sure if someone starts on hard their score doesnt post if they fail the level
 
 I think that should be it!
  */
@@ -59,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> name = new ArrayList<>();
     ArrayList<Integer> level = new ArrayList<>();
     ArrayList<Integer> sTot = new ArrayList<>();
-    ArrayList<Integer> mins = new ArrayList<>();
-    ArrayList<Integer> secs = new ArrayList<>();
 
 
     @Override
@@ -68,13 +67,37 @@ public class MainActivity extends AppCompatActivity {
         //TODO: check if extras were added (from the game), and if so pass to addScore.
 
         //TODO: Code for parsing in level stuff as said above
-        /*
-        String nameIn = getIntent().getExtras().getString("name", null);
-        if(nameIn != null){
-            //parse in the other stuff, then do addScore.
+
+        leaderStartData(); // Fills in base values of the leaderboard
+
+        String nameIn = "default menu";
+        int levelIn = 10;
+        int sTotIn = 67;
+
+        if (savedInstanceState == null) {// no idea how this works
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                nameIn = null;
+            } else {
+                nameIn = extras.getString("name", "none");
+                levelIn = Integer.parseInt(extras.getString("level", "-1"));
+                sTotIn = Integer.parseInt(extras.getString("sTot", "-1"));
+            }
+        } else {
+            nameIn = (String) savedInstanceState.getSerializable("name");
+            levelIn = Integer.parseInt((String) savedInstanceState.getSerializable("level"));
+            sTotIn = Integer.parseInt((String) savedInstanceState.getSerializable("sTot"));
         }
 
-         */
+
+        //nameIn = getIntent().getExtras().getString("name", "Hugh");
+        if(nameIn != null){
+            Log.i("name", nameIn);
+
+
+            addScore(nameIn, levelIn, sTotIn);
+        }
+
 
 
         super.onCreate(savedInstanceState);
@@ -99,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
         diffButton(null);// run this once to set up the diff button
-        leaderStartData(); // Fills in base values of the leaderboard
+
 
     }
 
@@ -224,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // any score can be passed in, if it doesnt place it will be added then removed
-    public void addScore (String nameIn, int levelIn, int sTotIn, int minIn, int secIn){
-        int spots = 5;// max number of scores to store
+    public void addScore (String nameIn, int levelIn, int sTotIn){
+        int spots = 4;// max number of scores to store
         int place = 0;
         for(int i = 0; i < spots; i++){// could probably do this faster with .get
             // i think this should work? idk, just get the place/index of where the new score goes
@@ -248,13 +271,9 @@ public class MainActivity extends AppCompatActivity {
         name.add(place, nameIn);
         level.add(place, levelIn);
         sTot.add(place, sTotIn);
-        mins.add(place, minIn);
-        secs.add(place, secIn);
-        name.remove(spots+1);
-        level.remove(spots+1);
-        sTot.remove(spots+1);
-        mins.remove(spots+1);
-        secs.remove(spots+1);
+        name.remove(spots);
+        level.remove(spots);
+        sTot.remove(spots);
     }
 
 }
