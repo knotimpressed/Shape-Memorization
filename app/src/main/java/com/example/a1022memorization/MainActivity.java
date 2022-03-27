@@ -23,8 +23,7 @@ import java.util.ArrayList;
 /*
 Bugs List:
 - Not really a bug but make better object names
-- remove handler if theres performance issues
-- make correct and incorrect popups not dissmissible
+- make correct and incorrect popups not dissmissible (do very last)
 
 
 Possible Improvements (They work now but might want to change):
@@ -32,9 +31,7 @@ Possible Improvements (They work now but might want to change):
 
 Todo:
 other/general:
-    passing values from the game activity into the main activity
-        side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
-    actually make addScore sort right
+    we have to pass the leaderboard data from screen to screen to keep it alive
     fix total time resetting and time left resetting the screen
     maybe make sure if someone starts on hard their score doesnt post if they fail the level, or make bottom leader lv 4
     pause timers when popups are up
@@ -81,11 +78,12 @@ public class MainActivity extends AppCompatActivity {
             sTotIn = Integer.parseInt((String) savedInstanceState.getSerializable("sTot"));
         }
 
-
         //nameIn = getIntent().getExtras().getString("name", "Hugh");
         if(nameIn != null){
             Log.i("name", nameIn);
 
+            levelIn = 7;
+            sTotIn = (60*7)-1;
 
             addScore(nameIn, levelIn, sTotIn);
         }
@@ -241,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
     // any score can be passed in, if it doesnt place it will be added then removed
     public void addScore (String nameIn, int levelIn, int sTotIn){
         int spots = 4;// max number of scores to store
-        int place = 0;
+        int place = 4;// default put it in the last place
         for(int i = 0; i < spots; i++){// could probably do this faster with .get
             // i think this should work? idk, just get the place/index of where the new score goes
             if(levelIn == level.get(i)){// there is a tie based on level, go to time
@@ -257,6 +255,10 @@ public class MainActivity extends AppCompatActivity {
                     place = i+1;// put in after this score
                     break;
                 }
+            }
+            if(levelIn > level.get(i)){// first place or whatever
+                place = i;
+                break;
             }
         }
 
