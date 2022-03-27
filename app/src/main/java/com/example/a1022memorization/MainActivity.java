@@ -31,22 +31,13 @@ Possible Improvements (They work now but might want to change):
 - Do the better practice of changing the difficulty buttons text properly
 
 Todo:
-leaderboard popup, which depends on:
-    passing values from the game activity into the main activity
-        side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
-    figuring out how to procedurally change popups(mostly figured out)
-    user name input (shouldnt be too hard)
-
-timing:
-    actually change to input when memorization time is up
-    pause timers when popups are up
-
-this stint:
+other/general:
     passing values from the game activity into the main activity
         side note: depending on how the intents work we may have to pass the leaderboard data from screen to screen to keep it alive
     actually make it sort right
     fix total time resetting and time left resetting
     make sure if someone starts on hard their score doesnt post if they fail the level
+    pause timers when popups are up
 
 I think that should be it!
  */
