@@ -404,7 +404,6 @@ public class GameActivity extends AppCompatActivity {
         Log.i("name passed out", nameLeader.get(0));
         intent.putExtra("levelLeader", levelLeader);
         intent.putExtra("sTotLeader", sTotLeader);
-
     }
 
 }
