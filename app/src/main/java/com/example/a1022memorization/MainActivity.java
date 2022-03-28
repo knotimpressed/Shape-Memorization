@@ -21,22 +21,18 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /*
+Todo:
+General testing
+
 Bugs List:
 - Not really a bug but make better object names
 - make correct and incorrect popups not dissmissible (do very last)
 
-
 Possible Improvements (They work now but might want to change):
 - Do the better practice of changing the difficulty buttons text properly
 
-Todo:
 other/general:
-    fix total time resetting and time left resetting the screen
-    maybe make sure if someone starts on hard their score doesnt post if they fail the level, or make bottom leader lv 4
-    pause timers when popups are up
     change px to dp
-
-I think that should be it!
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -168,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
         //Displays the Leaderboard data
         TextView leaderBoardText = popupView.findViewById(R.id.leaderBoard);
         leaderBoardText.setText("Leaderboard\n " +
-                "\uD83E\uDD47: " + name.get(0)  +"\n" + "Level: " +level.get(0) +", " + "Time: " + timeStr(sTot.get(0))
-                +"\n \uD83E\uDD48: " + name.get(1)  +"\n " + "Level: " + level.get(1) +", " + " Time: " + timeStr(sTot.get(1))
-                + "\n \uD83E\uDD49: "  + name.get(2)  +"\n " + "Level: " +level.get(2) +", " + " Time: " + timeStr(sTot.get(2))
+                "\uD83E\uDD47: " + name.get(0)  +"\n" + "Level: " +level.get(0) +", " + "Time: " + timeStr(sTot.get(0)) +"\n"
+                +"\n \uD83E\uDD48: " + name.get(1)  +"\n " + "Level: " + level.get(1) +", " + " Time: " + timeStr(sTot.get(1)) +"\n"
+                + "\n \uD83E\uDD49: "  + name.get(2)  +"\n " + "Level: " +level.get(2) +", " + " Time: " + timeStr(sTot.get(2)) +"\n"
                 + "\n \uD83C\uDF6A: "  + name.get(3)  +"\n " + "Level: " +level.get(3) +", " + " Time: " + timeStr(sTot.get(3)));
     }
     //Totally not code from the other class
