@@ -29,6 +29,7 @@ other/general:
 
 bugs:
     incorrect popup is dismissable
+    rotating phone causes crash-disable rotation
  */
 
 public class MainActivity extends AppCompatActivity {
