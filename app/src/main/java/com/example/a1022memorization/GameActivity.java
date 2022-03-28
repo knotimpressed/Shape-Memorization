@@ -82,13 +82,14 @@ public class GameActivity extends AppCompatActivity {
         int both;
         switch(level) {
             case 1:
-                both = 2;
             case 2:
                 both = 2;
+                break;
             case 3:
-                both = 3;
             case 4:
+            case 5:
                 both = 3;
+                break;
             default:
                 both = 4;
         }
