@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         leaderStartData(); // Fills in base values of the leaderboard
 
+
         String nameIn = "default menu";
         int levelIn = 10;
         int sTotIn = 67;
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 nameIn = extras.getString("name", "none");
                 levelIn = Integer.parseInt(extras.getString("level", "-1"));
                 sTotIn = Integer.parseInt(extras.getString("sTot", "-1"));
+                name = extras.getStringArrayList("nameLeader");
+                Log.i("name passed in", name.get(0));
+                level = extras.getIntegerArrayList("levelLeader");
+                sTot = extras.getIntegerArrayList("sTotLeader");
             }
         } else {
             nameIn = (String) savedInstanceState.getSerializable("name");
@@ -81,10 +86,8 @@ public class MainActivity extends AppCompatActivity {
         //nameIn = getIntent().getExtras().getString("name", "Hugh");
         if(nameIn != null){
             Log.i("name", nameIn);
-
-            levelIn = 7;
-            sTotIn = (60*7)-1;
-
+            //levelIn = 7;
+            //sTotIn = (60*7)-1;
             addScore(nameIn, levelIn, sTotIn);
         }
 
@@ -106,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
             //intent.putExtra("diffCount",diffCount);
 
             intent.putExtra("diffCount", diffCount);
+            intent.putExtra("nameLeader", name);
+            intent.putExtra("levelLeader", level);
+            intent.putExtra("sTotLeader", sTot);
 
             //Starts the game
             startActivity(intent);
@@ -238,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
     // any score can be passed in, if it doesnt place it will be added then removed
     public void addScore (String nameIn, int levelIn, int sTotIn){
+        levelIn = levelIn-1;// if you complete 2 it should be 2 not 3, this fixes that
         int spots = 4;// max number of scores to store
         int place = 4;// default put it in the last place
         for(int i = 0; i < spots; i++){// could probably do this faster with .get

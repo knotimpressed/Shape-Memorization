@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Calendar;
@@ -47,6 +48,10 @@ public class GameActivity extends AppCompatActivity {
     public final Handler handler = new Handler();
     public Runnable oneSec;
 
+    ArrayList<String> nameLeader = new ArrayList<>();
+    ArrayList<Integer> levelLeader = new ArrayList<>();
+    ArrayList<Integer> sTotLeader = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sTot = 0;
@@ -60,13 +65,19 @@ public class GameActivity extends AppCompatActivity {
         Button backButton = (Button) findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
+
+            leaderPass(intent);
+
             startActivity(intent);
             handler.removeCallbacks(oneSec);
         });
 
-        //Receives the parsed difficulty from the main menu
-
+        //Receives the parsed difficulty from the main menu, as well as the leaderboard data
         int diffCount = getIntent().getExtras().getInt("diffCount", 0);
+        nameLeader = getIntent().getExtras().getStringArrayList("nameLeader");
+        levelLeader = getIntent().getExtras().getIntegerArrayList("levelLeader");
+        sTotLeader = getIntent().getExtras().getIntegerArrayList("sTotLeader");
+
         level = diffCount+1;
         if(diffCount+2 <= 4) {
             columns = diffCount + 2;
@@ -230,6 +241,7 @@ public class GameActivity extends AppCompatActivity {
             Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
+                leaderPass(intent);
                 startActivity(intent);
                 handler.removeCallbacks(oneSec);
             });
@@ -241,7 +253,7 @@ public class GameActivity extends AppCompatActivity {
 
                 //Parses in the difficulty to the game
                 intent.putExtra("diffCount", level);// in theory we could just pass in the time too? idk this is a little bad
-
+                leaderPass(intent);
                 //Starts the game
                 startActivity(intent);
                 handler.removeCallbacks(oneSec);
@@ -271,7 +283,7 @@ public class GameActivity extends AppCompatActivity {
                     Log.i("level", Integer.toString(level));
                     intent.putExtra("stot", Integer.toString(sTot));
                     //repeat for all the others
-
+                    leaderPass(intent);
                     startActivity(intent);
                     handler.removeCallbacks(oneSec);
                     return false;
@@ -280,14 +292,7 @@ public class GameActivity extends AppCompatActivity {
 
             homeButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MainActivity.class);
-
-                //TextInputEditText nameText = (TextInputEditText) finalPopupView.findViewById(R.id.newName);
-
-                name = nameText.getText().toString();
-
-                intent.putExtra("name", name);
-                //repeat for all the others
-
+                leaderPass(intent);
                 startActivity(intent);
                 handler.removeCallbacks(oneSec);
             });
@@ -372,4 +377,13 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void leaderPass(Intent intent){
+        intent.putExtra("nameLeader", nameLeader);
+        Log.i("name passed out", nameLeader.get(0));
+        intent.putExtra("levelLeader", levelLeader);
+        intent.putExtra("sTotLeader", sTotLeader);
+
+    }
+
 }
