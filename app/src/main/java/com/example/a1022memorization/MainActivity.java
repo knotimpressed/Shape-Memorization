@@ -126,19 +126,19 @@ public class MainActivity extends AppCompatActivity {
         //1st
         name.add(0, "Joe");
         level.add(0,12);
-        sTot.add(0,320);
+        sTot.add(0,150);
         //2nd
         name.add(1, "Candice");
         level.add(1,7);
-        sTot.add(1,420);
+        sTot.add(1,80);
         //3rd
         name.add(2, "Ferris");
         level.add(2,5);
-        sTot.add(2,520);
+        sTot.add(2,70);
         //4th
         name.add(3,"Deez");
         level.add(3,3);
-        sTot.add(3,620);
+        sTot.add(3,65);
     }
     @SuppressLint("SetTextI18n") // Very helpful
     public void leaderPop(View view) {// makes leaderboard popup
