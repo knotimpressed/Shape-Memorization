@@ -78,15 +78,21 @@ public class GameActivity extends AppCompatActivity {
         levelLeader = getIntent().getExtras().getIntegerArrayList("levelLeader");
         sTotLeader = getIntent().getExtras().getIntegerArrayList("sTotLeader");
 
-        level = diffCount+1;
-        if(diffCount+2 <= 4) {
-            columns = diffCount + 2;
-            rows = diffCount + 2;
+        level = diffCount+1;// better level scaling
+        int both;
+        switch(level) {
+            case 1:
+                both = 2;
+            case 2:
+                both = 2;
+            case 3:
+                both = 3;
+            case 4:
+                both = 3;
+            default:
+                both = 4;
         }
-        else{
-            columns = 4;
-            rows = 4;
-        }
+        rows = both; columns = both;
 
         if(60-2*level >= 10){
             secsLeft = 61 - (2*(level-1));
