@@ -24,15 +24,11 @@ import java.util.ArrayList;
 Todo:
 General testing
 
-Bugs List:
-- Not really a bug but make better object names
-- make correct and incorrect popups not dissmissible (do very last)
-
-Possible Improvements (They work now but might want to change):
-- Do the better practice of changing the difficulty buttons text properly
-
 other/general:
     change px to dp
+
+bugs:
+    incorrect popup is dismissable
  */
 
 public class MainActivity extends AppCompatActivity {

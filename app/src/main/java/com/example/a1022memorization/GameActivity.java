@@ -240,11 +240,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void gamePop(View view, boolean correct) {// makes correct/incorrect popup
+        boolean focusable = true; // lets taps outside the popup also dismiss it if true (needed for input!)
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = null;// this needs to be here otherwise it complains
         if(correct){
+            focusable = false;
             int sTotTemp = sTot; // so the time doesnt keep counting
             secsLeft = 1000;// so it doesnt cycle once the time is up again
             popupView = inflater.inflate(R.layout.correct_popup, null);// make the popup
@@ -313,8 +315,15 @@ public class GameActivity extends AppCompatActivity {
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it if true (needed for input!)
+
+        //focusable = false;
+
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        //popupWindow.setFocusable(false);//breaks input
+        popupWindow.setTouchable(true);
+        popupWindow.setOutsideTouchable(false);
+
+
 
         // show the popup window
         // which view you pass in doesn't matter, it is only used for the window tolken
