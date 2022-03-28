@@ -31,7 +31,6 @@ Possible Improvements (They work now but might want to change):
 
 Todo:
 other/general:
-    we have to pass the leaderboard data from screen to screen to keep it alive
     fix total time resetting and time left resetting the screen
     maybe make sure if someone starts on hard their score doesnt post if they fail the level, or make bottom leader lv 4
     pause timers when popups are up

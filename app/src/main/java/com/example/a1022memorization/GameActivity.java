@@ -77,6 +77,7 @@ public class GameActivity extends AppCompatActivity {
         nameLeader = getIntent().getExtras().getStringArrayList("nameLeader");
         levelLeader = getIntent().getExtras().getIntegerArrayList("levelLeader");
         sTotLeader = getIntent().getExtras().getIntegerArrayList("sTotLeader");
+        sTot = getIntent().getExtras().getInt("sTot", 0);
 
         level = diffCount+1;// better level scaling
         int both;
@@ -244,6 +245,8 @@ public class GameActivity extends AppCompatActivity {
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = null;// this needs to be here otherwise it complains
         if(correct){
+            int sTotTemp = sTot; // so the time doesnt keep counting
+            secsLeft = 1000;// so it doesnt cycle once the time is up again
             popupView = inflater.inflate(R.layout.correct_popup, null);// make the popup
             Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
             homeButton.setOnClickListener(v -> {
@@ -254,20 +257,21 @@ public class GameActivity extends AppCompatActivity {
             });
 
             Button nextButton = (Button) popupView.findViewById(R.id.next);// make the next button do something
-            nextButton.setOnClickListener(v -> { //TODO: decide if this is acceptable cause its a lazy fix
+            nextButton.setOnClickListener(v -> {
                 // level can be left as is since its already difficulty + 1
                 Intent intent = new Intent(this,GameActivity.class);
 
-                //Parses in the difficulty to the game
+                //Parses in the difficulty and time to the game
                 intent.putExtra("diffCount", level);// in theory we could just pass in the time too? idk this is a little bad
                 leaderPass(intent);
+                intent.putExtra("sTot", sTotTemp);
                 //Starts the game
                 startActivity(intent);
                 handler.removeCallbacks(oneSec);
             });
 
         }
-        else {
+        else if (correct == false){
             popupView = inflater.inflate(R.layout.incorrect_popup, null);
             Button homeButton = (Button) popupView.findViewById(R.id.home);// make the home button do something
             View finalPopupView = popupView;// needed for lambda
@@ -288,7 +292,8 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("name", name);
                     intent.putExtra("level", Integer.toString(level));
                     Log.i("level", Integer.toString(level));
-                    intent.putExtra("stot", Integer.toString(sTot));
+                    Log.i("sTot out", Integer.toString(sTot));
+                    intent.putExtra("sTot", Integer.toString(sTot));
                     //repeat for all the others
                     leaderPass(intent);
                     startActivity(intent);
