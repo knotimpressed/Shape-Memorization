@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,8 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Prevents Screen rotation
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         sTot = 0;
         super.onCreate(savedInstanceState);
         //Makes the app full screen because the wifi and other icons are annoying
@@ -131,6 +134,11 @@ public class GameActivity extends AppCompatActivity {
         handler.postDelayed(oneSec, 1000);
     }
 
+    //Disables phone back button from working
+    @Override
+    public void onBackPressed(){
+
+    }
     public void getUserTable(int rows, int columns, Context context){
         guess = new int[rows][columns];//in theory, all zeroes on initialization
         Button[][] buttonArray = new Button[rows][columns];// initialize button array
@@ -371,6 +379,7 @@ public class GameActivity extends AppCompatActivity {
     public void userInput(Context context, Button submitButton, int[] pattern) {
         this.getUserTable(rows, columns, context);// sloppy, but makes correct button listeners, and wipes table
 
+        secsLeft = 0;
         submitButton.setText("submit");
         submitButton.setOnClickListener(v2 -> {// check user input if its pressed again (ikik this is kinda bad)
 

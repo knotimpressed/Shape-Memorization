@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,13 +24,7 @@ import java.util.ArrayList;
 /*
 Todo:
 General testing
-
-other/general:
-    change px to dp
-
-bugs:
-    incorrect popup is dismissable
-    rotating phone causes crash-disable rotation
+    Everything works as intended from testing
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -43,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> sTot = new ArrayList<>();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //TODO: check if extras were added (from the game), and if so pass to addScore.
 
         //TODO: Code for parsing in level stuff as said above
-
+        //Prevents screen rotation
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         leaderStartData(); // Fills in base values of the leaderboard
 
 
@@ -100,7 +97,16 @@ public class MainActivity extends AppCompatActivity {
             //Parses in the difficulty to the game
             //intent.putExtra("diffCount",diffCount);
 
-            intent.putExtra("diffCount", diffCount);
+            //Changes the start grids of each difficulty
+            if(diffCount == 0){
+                intent.putExtra("diffCount", diffCount);
+            }
+            else if (diffCount == 1){
+                intent.putExtra("diffCount", diffCount + 1);
+            }
+            else{
+                intent.putExtra("diffCount", diffCount + 3);
+            }
             intent.putExtra("nameLeader", name);
             intent.putExtra("levelLeader", level);
             intent.putExtra("sTotLeader", sTot);
@@ -114,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Disables phone back button from working
+    @Override
+    public void onBackPressed(){
+
+    }
     public void leaderStartData(){
         //LeaderBoard Starting Data
         //1st
@@ -129,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         level.add(2,5);
         sTot.add(2,70);
         //4th
-        name.add(3,"Deez");
+        name.add(3,"Duck");
         level.add(3,3);
         sTot.add(3,65);
     }

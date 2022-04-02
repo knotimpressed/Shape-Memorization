@@ -9,8 +9,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="30dp"
-        android:textSize="22sp"
-        android:text="How to play: \nMemorize the grid of colours for the time given, and recreate it as fast as possible!"/>
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="How to play: \nMemorize the grid of colours for the time given, and recreate it as fast as possible!
+        \nClick Done if you are ready to input or wait till the timer runs out. You have unlimited time to input your guess by clicking Submit!"
+        android:textSize="22sp" />
 
 </RelativeLayout>
