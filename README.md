@@ -1,4 +1,4 @@
-# Shape-Memorization - 1022
+# Color-Memorization - 1022
 Repo for 1022 Android Studio project
 
 Team name: 200 IQ
@@ -8,7 +8,7 @@ Members:
 - Gabriel Henderson ghend@my.yorku.ca, Section N, Lab 04
 - Arash Safari arashrt@my.yorku.ca, Section M, Lab 01
 
-Project Title: Shape Memorization
+Project Title: Color Memorization
 A grid or variable size is displayed to the user, consisting of various colors. The user must memorize the grid, and then duplicate it on a blank grid from memory. The best times and scores will be shown to a user in a leaderboard, with higher accuracies giving a higher score. If a given grid is completed successfully, more grids with less patterns and greater size will be shown until the user fails.
 
 Functional Requirements:
